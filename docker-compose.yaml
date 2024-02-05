@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  nestjs:
+    build: ./
+    container_name: nestjs_api
+    environment:
+      - POSTGRES_H0ST=127.0.0.1
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DATABASE=postgres
+      - JWT_KEY=0$[@f9gie$tHDC+xh%fJVPmYIEmy;pXwOW&0jKf;NiPS&}}`1&'Z_ReDitZHJy2
+      - JWT_EXPIRATION_TIME=9999
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    networks:
+      -nestjs_network:
+
+
+  postgres:
+    image: postgres:latest
+    container_name: postgress_db
+    ports:
+      - 5432:5432
+    networks:
+      -nestjs_network:
+
+
+networks:
+  nestjs_network:
