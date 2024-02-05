@@ -15,7 +15,7 @@ RUN npm run build
 FROM node:18.12.0
 
 ARG NODE_ENV=production
-ARG POSTGRES_H0ST='db'
+ARG POSTGRES_H0ST=db
 ARG POSTGRES_PORT=5432
 ARG POSTGRES_USER='postgres'
 ARG POSTGRES_PASSWORD='mysecretpassword'
@@ -40,8 +40,6 @@ COPY --from=build /usr/src/app/dist ./dist
 COPY package*.json ./
 
 RUN npm install --only=production
-
-RUN rm package*.json
 
 EXPOSE 3000
 
