@@ -1,9 +1,23 @@
-version: '3'
+
+version: '3.5'
 
 services:
-  nestjs:
-    build: ./
-    container_name: nestjs_api
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-docker-postgres
     environment:
       - POSTGRES_H0ST=127.0.0.1
       - POSTGRES_PORT=5432
@@ -13,21 +27,20 @@ services:
       - JWT_KEY=0$[@f9gie$tHDC+xh%fJVPmYIEmy;pXwOW&0jKf;NiPS&}}`1&'Z_ReDitZHJy2
       - JWT_EXPIRATION_TIME=9999
     ports:
-      - 3000:3000
+      - '3000:3000'
     depends_on:
       - db
-    networks:
-      - nestjs_network
+    volumes:
+      - ./src:/app/src
 
-
-  postgres:
-    image: postgres:latest
-    container_name: postgress_db
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: nest-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
     ports:
-      - 5432:5432
-    networks:
-      - nestjs_network
-
-
-networks:
-  nestjs_network:
+      - '5050:80'
+    depends_on:
+      - db
