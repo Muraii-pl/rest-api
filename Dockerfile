@@ -19,7 +19,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
-COPY--from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/dist ./dist
 
 COPY package*.json ./
 
