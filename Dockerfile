@@ -1,15 +1,32 @@
-version: '3.8'
-services:
-  antgymdb:
-    image: postgres:15.3
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: postgres
-    networks:
-      - local
-networks:
-  local:
+#build stage
+FROM node:18.12.0 AS build
 
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+#prod stage
+FROM node:18.12.0
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /usr/src/app
+
+COPY--from=build /usr/src/app/dist ./dist
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+RUN rm package*.json
+
+EXPOSE 3000
+
+CMD ["node", "dist/main.js"]
