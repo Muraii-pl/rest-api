@@ -1,5 +1,5 @@
 #build stage
-FROM node:18.12.0 AS build
+FROM node:18 AS build
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 #prod stage
-FROM node:18.12.0
+FROM node:18
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -29,4 +29,5 @@ RUN rm package*.json
 
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD [ "npm", "run", "start:dev" ]
+
