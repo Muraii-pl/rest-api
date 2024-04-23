@@ -31,6 +31,7 @@ import {
 import { AuthGuard } from '../common/guards/auth.guard';
 import { ExercisesInTrainingsService } from '../exercises-in-trainings/exercises-in-trainings.service';
 import { CreateExercisesInTrainingsDto } from '../exercises-in-trainings/dtos';
+import { TrainingsEntity } from './trainings.entity';
 
 @Controller('training')
 @ApiTags('Training')
@@ -59,6 +60,7 @@ export class TrainingsController {
   @Get('nearest')
   @HttpCode(200)
   public async getNearestTraining(@Req() {user: { id }}): Promise<number> {
+    console.log(id);
     return await this._trainingsService.getNearestTraining(id);
   }
 
@@ -78,7 +80,7 @@ export class TrainingsController {
     type: GetTrainingDto,
     description: 'Create user training',
   })
-  public async createTraining(@Body() trainingData: CreateTrainingDto, @Req() { user: { id } }): Promise<GetTrainingDto> {
+  public async createTraining(@Body() trainingData: CreateTrainingDto, @Req() { user: { id } }): Promise<TrainingsEntity> {
     return await this._trainingsService.createTraining(id, trainingData);
   }
 

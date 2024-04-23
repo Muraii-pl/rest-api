@@ -1,6 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsString } from 'class-validator';
+import {
+  IsArray,
+  IsString,
+} from 'class-validator';
+import { CreateExercisesInTrainingsDto } from '../../exercises-in-trainings/dtos';
 
 export class CreateExerciseDto {
   @ApiProperty({
@@ -26,4 +30,13 @@ export class CreateExerciseDto {
   @Expose()
   @IsString()
   public readonly unit: string;
+
+  @ApiProperty({
+    type: CreateExercisesInTrainingsDto,
+    name: 'exercises',
+    isArray: true
+  })
+  @Expose()
+  @IsArray()
+  public readonly exercises: CreateExercisesInTrainingsDto[];
 }

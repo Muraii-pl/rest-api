@@ -1,9 +1,11 @@
-import { GetTrainingDto } from './get-training.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  ApiProperty,
+} from '@nestjs/swagger';
 import {
   Expose,
 } from 'class-transformer';
 import { GetExerciseInTrainingDto } from './get-exercise-in-training.dto';
+import { GetTrainingDto } from './get-training.dto';
 
 export class GetTrainingWithExercisesDto extends GetTrainingDto {
   @ApiProperty({

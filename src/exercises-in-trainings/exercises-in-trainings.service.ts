@@ -17,8 +17,6 @@ import { ExercisesInTrainingDto } from './dtos';
 export class ExercisesInTrainingsService {
 
   constructor(
-    @Inject(TRAININGS_REPOSITORY)
-    private readonly _trainingRepository: Repository<TrainingsEntity>,
     @Inject(EXERCISES_REPOSITORY)
     private readonly _exerciseRepository: Repository<ExercisesEntity>,
     @Inject(EXERCISES_IN_TRAININGS)
@@ -26,14 +24,14 @@ export class ExercisesInTrainingsService {
   }
 
   public async addExerciseToTraining(trainingId: number, exercise: ExercisesInTrainingDto[]): Promise<void> {
-    const exercisesInTraining: ExercisesInTrainingsEntity[] = exercise.map((exercise: ExercisesInTrainingDto) => {
-      return this._exercisesInTrainingsRepository.create({
-        trainingId: trainingId,
-        exerciseId: exercise.exerciseId,
-        pause: exercise.pause,
-      });
-    });
-    await this._exercisesInTrainingsRepository.save(exercisesInTraining);
+    // const exercisesInTraining: ExercisesInTrainingsEntity[] = exercise.map((exercise: ExercisesInTrainingDto) => {
+    //   return this._exercisesInTrainingsRepository.create({
+    //     trainingId: trainingId,
+    //     exerciseId: exercise.exerciseId,
+    //     pause: exercise.pause,
+    //   });
+    // });
+    // await this._exercisesInTrainingsRepository.save(exercisesInTraining);
   }
 
   public async removeExerciseFromTraining(trainingId: number, exerciseId: number): Promise<void> {

@@ -1,17 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ExercisesInTrainingDto } from '../../exercises-in-trainings/dtos';
 
-export class GetExerciseInTrainingDto {
-  @ApiProperty({
-    type: 'string',
-    name: 'exerciseName',
-  })
-  public readonly exerciseName: string;
-
-  @ApiProperty({
-    type: 'string',
-    name: 'pause',
-  })
-  public readonly pause: string;
+export class GetExerciseInTrainingDto extends ExercisesInTrainingDto {
 
   @ApiProperty({
     type: 'string',

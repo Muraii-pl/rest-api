@@ -112,17 +112,30 @@ export class DoneExerciseService {
 
     const lastDoneExercise = await this._doneExerciseRepository.createQueryBuilder('de')
       .select('e.name', 'name')
-      .addSelect(`DATE_TRUNC('day', de.created_at)`, 'created_at')
+      .addSelect('de.load', 'load')
+      .addSelect('de.exercise_id', 'exerciseId')
+      .addSelect('e.unit', 'unit')
+      .addSelect(`DATE_TRUNC('day', de.created_at)`, 'createdAt')
       .where(`DATE_TRUNC('day', de.created_at) = :createdAt`, { createdAt: subQuery.created_at })
       .leftJoin(ExercisesEntity, 'e', 'de.exercise_id = e.id')
       .getRawMany();
-    console.log(lastDoneExercise);
-    return lastDoneExercise.map((exercise) => {
-      return {
-        ...exercise,
-        created_at: new Date(exercise.created_at).toISOString().slice(0, 10),
-      };
-    });
+    return lastDoneExercise.reduce((prevValue, nextValue) => {
+      const fExercise = prevValue.find((exercise) => exercise.exerciseId === nextValue.exerciseId);
+      if (fExercise) {
+        fExercise.loads.push(nextValue.load + nextValue.unit);
+        return prevValue;
+      }
+
+      return [
+        ...prevValue,
+        {
+          exerciseId: nextValue.exerciseId,
+          name: nextValue.name,
+          loads: [nextValue.load + nextValue.unit],
+          createdAt: new Date(nextValue.createdAt).toISOString().slice(0, 10),
+        },
+      ];
+    }, []);
   }
 
   public async updateDoneExercise(doneExercises: UpdateDoneExerciseDto[]): Promise<void> {

@@ -15,10 +15,37 @@ export class ExercisesInTrainingsEntity {
 
   @Column({
     type: 'varchar',
-    name: 'pause',
+    name: 'pause_between',
     nullable: true,
   })
-  public readonly pause: string;
+  public readonly pauseBetween: string;
+
+  @Column({
+    type: 'varchar',
+    name: 'pause_after',
+    nullable: true,
+  })
+  public readonly pauseAfter: string;
+
+  @Column({
+    type: 'integer',
+    name: 'warmup_series_qty',
+    nullable: true
+  })
+  public readonly warmupSeriesQty: number;
+
+  @Column({
+    type: 'integer',
+    name: 'rights_series_qty',
+  })
+  public readonly rightSeriesQty: number;
+
+  @Column({
+    type: 'varchar',
+    name: 'pace',
+    length: 4
+  })
+  public readonly pace: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
   public created_at: Date;

@@ -7,18 +7,58 @@ import { Expose } from 'class-transformer';
 
 export class ExercisesInTrainingDto {
   @ApiProperty({
-    name: 'exerciseId',
-    type: 'number'
+    name: 'id',
+    type: 'number',
   })
   @IsNumber()
   @Expose()
-  public readonly exerciseId: number;
+  public readonly id: number;
 
   @ApiProperty({
-    name: 'pause',
-    type: 'string'
+    name: 'name',
+    type: 'string',
+  })
+  @IsString()
+  @Expose()
+  public readonly name: string;
+
+  @ApiProperty({
+    name: 'pauseBetween',
+    type: 'string',
   })
   @Expose()
   @IsString()
-  public readonly pause: string;
+  public readonly pauseBetween: string;
+
+  @ApiProperty({
+    name: 'pauseAfter',
+    type: 'string',
+  })
+  @IsString()
+  @Expose()
+  public readonly pauseAfter: string;
+
+  @ApiProperty({
+    name: 'pace',
+    type: 'string',
+  })
+  @IsString()
+  @Expose()
+  public readonly pace: string;
+
+  @ApiProperty({
+    name: 'warmupSeriesQty',
+    type: 'number',
+  })
+  @IsNumber()
+  @Expose()
+  public readonly warmupSeriesQty: number;
+
+  @ApiProperty({
+    name: 'rightSeriesQty',
+    type: 'number',
+  })
+  @IsNumber()
+  @Expose()
+  public readonly rightSeriesQty: number;
 }

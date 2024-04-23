@@ -2,10 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { DayOfWeekEnum } from '../../common/enums';
 import { Expose } from 'class-transformer';
 import {
+  IsArray,
   IsBoolean,
   IsEnum,
   IsString,
 } from 'class-validator';
+import {
+  ExercisesInTrainingDto,
+} from '../../exercises-in-trainings/dtos';
 
 export class CreateTrainingDto {
 
@@ -33,4 +37,13 @@ export class CreateTrainingDto {
   @Expose()
   @IsString()
   public readonly name: string;
+
+  @ApiProperty({
+    name: 'exercises',
+    type: ExercisesInTrainingDto,
+    isArray: true
+  })
+  @Expose()
+  @IsArray()
+  public readonly exercises: ExercisesInTrainingDto[];
 }

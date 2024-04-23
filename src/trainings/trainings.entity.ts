@@ -10,7 +10,7 @@ import { DayOfWeekEnum } from '../common/enums';
 import { JoinColumn } from 'typeorm';
 import { ExercisesInTrainingsEntity } from '../exercises-in-trainings/exercises-in-trainings.entity';
 
-@Entity('tranings')
+@Entity('trainings')
 export class TrainingsEntity extends BaseEntity {
 
   @Column({
